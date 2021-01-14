@@ -3,6 +3,7 @@ package com.github.alexandresantosm.citiesapi.countries.service;
 import java.util.List;
 
 import com.github.alexandresantosm.citiesapi.countries.domain.Country;
+import com.github.alexandresantosm.citiesapi.countries.exception.CountryNotFoundException;
 import com.github.alexandresantosm.citiesapi.countries.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,5 +18,11 @@ public class CountryService {
 	
 	public Page<Country> findAllCountries(Pageable page) {
 		return countryRepository.findAll(page);
+	}
+
+
+	public Country findByIdCountry(Long id) throws CountryNotFoundException {
+		return countryRepository.findById(id)
+				.orElseThrow(() -> new CountryNotFoundException(id));
 	}
 }
